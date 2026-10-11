@@ -10,8 +10,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,6 +59,25 @@ fun ArtSpaceScreen(modifier: Modifier = Modifier) {
                     contentScale = ContentScale.Fit
                 )
             }
+        }
+        Spacer(modifier = Modifier.height(24.dp))
+        ArtworkDetails(
+            title = stringResource(R.string.art1_title),
+            artist = stringResource(R.string.unknown_artist),
+            year = stringResource(R.string.unknown_year)
+        )
+    }
+}
+
+@Composable
+fun ArtworkDetails(title: String, artist: String, year: String) {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.surfaceVariant
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = title, style = MaterialTheme.typography.headlineSmall)
+            Text(text = "$artist · $year", style = MaterialTheme.typography.bodyMedium)
         }
     }
 }

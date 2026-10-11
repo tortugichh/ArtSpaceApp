@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Art Space</string>
     <string name="art1_description">Naruto wearing goggles in profile</string>
+    <string name="art1_title">Naruto in profile</string>
+    <string name="unknown_artist">Artist unknown</string>
+    <string name="unknown_year">Year unknown</string>
 </resources>
