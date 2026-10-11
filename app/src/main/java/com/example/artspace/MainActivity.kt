@@ -7,16 +7,23 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,6 +50,23 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ArtSpaceScreen(modifier: Modifier = Modifier) {
+    var artworkIndex by rememberSaveable { mutableIntStateOf(1) }
+    val artworkImage = when (artworkIndex) {
+        1 -> R.drawable.art1
+        2 -> R.drawable.art2
+        else -> R.drawable.art3
+    }
+    val artworkTitle = when (artworkIndex) {
+        1 -> R.string.art1_title
+        2 -> R.string.art2_title
+        else -> R.string.art3_title
+    }
+    val artworkDescription = when (artworkIndex) {
+        1 -> R.string.art1_description
+        2 -> R.string.art2_description
+        else -> R.string.art3_description
+    }
+
     Column(
         modifier = modifier.fillMaxSize().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -53,8 +77,8 @@ fun ArtSpaceScreen(modifier: Modifier = Modifier) {
         ) {
             Surface(shadowElevation = 8.dp, color = Color.White) {
                 Image(
-                    painter = painterResource(R.drawable.art1),
-                    contentDescription = stringResource(R.string.art1_description),
+                    painter = painterResource(artworkImage),
+                    contentDescription = stringResource(artworkDescription),
                     modifier = Modifier.fillMaxWidth().padding(16.dp),
                     contentScale = ContentScale.Fit
                 )
@@ -62,10 +86,26 @@ fun ArtSpaceScreen(modifier: Modifier = Modifier) {
         }
         Spacer(modifier = Modifier.height(24.dp))
         ArtworkDetails(
-            title = stringResource(R.string.art1_title),
+            title = stringResource(artworkTitle),
             artist = stringResource(R.string.unknown_artist),
             year = stringResource(R.string.unknown_year)
         )
+        Spacer(modifier = Modifier.height(24.dp))
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Button(
+                onClick = { artworkIndex = if (artworkIndex == 1) 3 else artworkIndex - 1 },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(stringResource(R.string.previous))
+            }
+            Spacer(modifier = Modifier.width(24.dp))
+            Button(
+                onClick = { artworkIndex = if (artworkIndex == 3) 1 else artworkIndex + 1 },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(stringResource(R.string.next))
+            }
+        }
     }
 }
 

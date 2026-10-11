@@ -2,6 +2,12 @@
     <string name="app_name">Art Space</string>
     <string name="art1_description">Naruto wearing goggles in profile</string>
     <string name="art1_title">Naruto in profile</string>
+    <string name="art2_title">Naruto with flowers</string>
+    <string name="art3_title">Naruto in the village</string>
+    <string name="art2_description">Naruto holding a bouquet of flowers</string>
+    <string name="art3_description">Naruto standing in the village</string>
     <string name="unknown_artist">Artist unknown</string>
     <string name="unknown_year">Year unknown</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
 </resources>
