@@ -6,13 +6,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -67,42 +70,85 @@ fun ArtSpaceScreen(modifier: Modifier = Modifier) {
         else -> R.string.art3_description
     }
 
-    Column(
-        modifier = modifier.fillMaxSize().padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Box(
-            modifier = Modifier.weight(1f).fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            Surface(shadowElevation = 8.dp, color = Color.White) {
-                Image(
-                    painter = painterResource(artworkImage),
-                    contentDescription = stringResource(artworkDescription),
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
-                    contentScale = ContentScale.Fit
+    BoxWithConstraints(modifier = modifier.fillMaxSize().padding(16.dp)) {
+        if (maxWidth > maxHeight) {
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                ArtworkFrame(
+                    imageRes = artworkImage,
+                    description = stringResource(artworkDescription),
+                    modifier = Modifier.weight(1f).fillMaxHeight()
+                )
+                Spacer(modifier = Modifier.width(24.dp))
+                ArtworkPanel(
+                    title = stringResource(artworkTitle),
+                    onPrevious = { artworkIndex = if (artworkIndex == 1) 3 else artworkIndex - 1 },
+                    onNext = { artworkIndex = if (artworkIndex == 3) 1 else artworkIndex + 1 },
+                    modifier = Modifier.weight(1f)
+                )
+            }
+        } else {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                ArtworkFrame(
+                    imageRes = artworkImage,
+                    description = stringResource(artworkDescription),
+                    modifier = Modifier.weight(1f).fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(24.dp))
+                ArtworkPanel(
+                    title = stringResource(artworkTitle),
+                    onPrevious = { artworkIndex = if (artworkIndex == 1) 3 else artworkIndex - 1 },
+                    onNext = { artworkIndex = if (artworkIndex == 3) 1 else artworkIndex + 1 }
                 )
             }
         }
-        Spacer(modifier = Modifier.height(24.dp))
+    }
+}
+
+@Composable
+fun ArtworkFrame(imageRes: Int, description: String, modifier: Modifier = Modifier) {
+    BoxWithConstraints(modifier = modifier, contentAlignment = Alignment.Center) {
+        val artworkSize = (minOf(maxWidth, maxHeight) - 32.dp).coerceAtLeast(0.dp)
+        Surface(
+            modifier = Modifier.size(artworkSize),
+            shadowElevation = 8.dp,
+            color = Color.White
+        ) {
+            Image(
+                painter = painterResource(imageRes),
+                contentDescription = description,
+                modifier = Modifier.fillMaxSize().padding(12.dp),
+                contentScale = ContentScale.Crop
+            )
+        }
+    }
+}
+
+@Composable
+fun ArtworkPanel(
+    title: String,
+    onPrevious: () -> Unit,
+    onNext: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier.fillMaxWidth()) {
         ArtworkDetails(
-            title = stringResource(artworkTitle),
+            title = title,
             artist = stringResource(R.string.unknown_artist),
             year = stringResource(R.string.unknown_year)
         )
         Spacer(modifier = Modifier.height(24.dp))
         Row(modifier = Modifier.fillMaxWidth()) {
-            Button(
-                onClick = { artworkIndex = if (artworkIndex == 1) 3 else artworkIndex - 1 },
-                modifier = Modifier.weight(1f)
-            ) {
+            Button(onClick = onPrevious, modifier = Modifier.weight(1f)) {
                 Text(stringResource(R.string.previous))
             }
             Spacer(modifier = Modifier.width(24.dp))
-            Button(
-                onClick = { artworkIndex = if (artworkIndex == 3) 1 else artworkIndex + 1 },
-                modifier = Modifier.weight(1f)
-            ) {
+            Button(onClick = onNext, modifier = Modifier.weight(1f)) {
                 Text(stringResource(R.string.next))
             }
         }
