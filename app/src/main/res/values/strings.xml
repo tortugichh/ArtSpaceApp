@@ -1,13 +1,22 @@
 <resources>
     <string name="app_name">Art Space</string>
     <string name="art1_description">Naruto wearing goggles in profile</string>
-    <string name="art1_title">Naruto in profile</string>
-    <string name="art2_title">Naruto with flowers</string>
-    <string name="art3_title">Naruto in the village</string>
-    <string name="art2_description">Naruto holding a bouquet of flowers</string>
-    <string name="art3_description">Naruto standing in the village</string>
+    <string name="art1_title">Obito in profile</string>
+    <string name="art2_title">Obito with flowers</string>
+    <string name="art3_title">Obito in the village</string>
+    <string name="art2_description">Obito holding a bouquet of flowers</string>
+    <string name="art3_description">Obito standing in the village</string>
     <string name="unknown_artist">Artist unknown</string>
     <string name="unknown_year">Year unknown</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
+
+    <string name="art1_artist">Masashi Kishimoto</string>
+    <string name="art1_year">2002</string>
+
+    <string name="art2_artist">Masashi Kishimoto</string>
+    <string name="art2_year">2020</string>
+
+    <string name="art3_artist">Masashi Kishimoto</string>
+    <string name="art3_year">2026</string>
 </resources>

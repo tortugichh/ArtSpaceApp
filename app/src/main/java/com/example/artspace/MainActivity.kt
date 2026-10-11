@@ -69,6 +69,17 @@ fun ArtSpaceScreen(modifier: Modifier = Modifier) {
         2 -> R.string.art2_description
         else -> R.string.art3_description
     }
+    val artworkArtist = when (artworkIndex) {
+        1 -> R.string.art1_artist
+        2 -> R.string.art2_artist
+        else -> R.string.art3_artist
+    }
+
+    val artworkYear = when (artworkIndex) {
+        1 -> R.string.art1_year
+        2 -> R.string.art2_year
+        else -> R.string.art3_year
+    }
 
     BoxWithConstraints(modifier = modifier.fillMaxSize().padding(16.dp)) {
         if (maxWidth > maxHeight) {
@@ -84,6 +95,8 @@ fun ArtSpaceScreen(modifier: Modifier = Modifier) {
                 Spacer(modifier = Modifier.width(24.dp))
                 ArtworkPanel(
                     title = stringResource(artworkTitle),
+                    artist = stringResource(artworkArtist),
+                    year = stringResource(artworkYear),
                     onPrevious = { artworkIndex = if (artworkIndex == 1) 3 else artworkIndex - 1 },
                     onNext = { artworkIndex = if (artworkIndex == 3) 1 else artworkIndex + 1 },
                     modifier = Modifier.weight(1f)
@@ -102,6 +115,8 @@ fun ArtSpaceScreen(modifier: Modifier = Modifier) {
                 Spacer(modifier = Modifier.height(24.dp))
                 ArtworkPanel(
                     title = stringResource(artworkTitle),
+                    artist = stringResource(artworkArtist),
+                    year = stringResource(artworkYear),
                     onPrevious = { artworkIndex = if (artworkIndex == 1) 3 else artworkIndex - 1 },
                     onNext = { artworkIndex = if (artworkIndex == 3) 1 else artworkIndex + 1 }
                 )
@@ -132,6 +147,8 @@ fun ArtworkFrame(imageRes: Int, description: String, modifier: Modifier = Modifi
 @Composable
 fun ArtworkPanel(
     title: String,
+    artist: String,
+    year: String,
     onPrevious: () -> Unit,
     onNext: () -> Unit,
     modifier: Modifier = Modifier
@@ -139,16 +156,26 @@ fun ArtworkPanel(
     Column(modifier = modifier.fillMaxWidth()) {
         ArtworkDetails(
             title = title,
-            artist = stringResource(R.string.unknown_artist),
-            year = stringResource(R.string.unknown_year)
+            artist = artist,
+            year = year
         )
+
         Spacer(modifier = Modifier.height(24.dp))
+
         Row(modifier = Modifier.fillMaxWidth()) {
-            Button(onClick = onPrevious, modifier = Modifier.weight(1f)) {
+            Button(
+                onClick = onPrevious,
+                modifier = Modifier.weight(1f)
+            ) {
                 Text(stringResource(R.string.previous))
             }
+
             Spacer(modifier = Modifier.width(24.dp))
-            Button(onClick = onNext, modifier = Modifier.weight(1f)) {
+
+            Button(
+                onClick = onNext,
+                modifier = Modifier.weight(1f)
+            ) {
                 Text(stringResource(R.string.next))
             }
         }
